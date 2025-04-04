@@ -6,9 +6,11 @@ import db.exception.InvalidEntityException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+
 public class Database {
 
     private static ArrayList<Entity> entities = new ArrayList<>();
+
     public static int idCreation;
     private static HashMap<Integer, Validator> validators = new HashMap<>();
 
@@ -33,7 +35,8 @@ public class Database {
     public static Entity get(int id) {
         for (Entity entity : entities)
             if (entity.id == id)
-                return entity.clone(); // Return a clone instead of original
+                return entity.clone();
+
         throw new EntityNotFoundException(id);
     }
 
@@ -43,6 +46,7 @@ public class Database {
                 entities.remove(entity);
                 return;
             }
+
         throw new EntityNotFoundException(id);
     }
 
@@ -53,6 +57,7 @@ public class Database {
         for (Entity entity : entities)
             if (entity.id == e.id) {
                 entities.set(entities.indexOf(entity), e.clone());
+
                 return;
             }
         throw new EntityNotFoundException();
