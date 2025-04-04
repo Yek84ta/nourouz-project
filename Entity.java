@@ -12,3 +12,4 @@ public abstract class Entity implements Cloneable {
         }
     }
 }
+

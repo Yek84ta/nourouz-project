@@ -7,7 +7,9 @@ import java.util.ArrayList;
 public class Database {
 
     private static ArrayList<Entity> entities = new ArrayList<>();
+
     public static int idCreation;
+
 
     private Database() {
     }
@@ -16,12 +18,15 @@ public class Database {
         entities.add(e);
         idCreation ++;
         e.id = idCreation;
+
     }
 
     public static Entity get(int id) {
         for (Entity entity : entities)
             if (entity.id == id)
-                return entity.clone(); // Return a clone instead of original
+
+                return entity.clone();
+
         throw new EntityNotFoundException(id);
     }
 
@@ -31,6 +36,7 @@ public class Database {
                 entities.remove(entity);
                 return;
             }
+
         throw new EntityNotFoundException(id);
     }
 
@@ -38,6 +44,7 @@ public class Database {
         for (Entity entity : entities)
             if (entity.id == e.id) {
                 entities.set(entities.indexOf(entity), e.clone());
+
                 return;
             }
         throw new EntityNotFoundException();
