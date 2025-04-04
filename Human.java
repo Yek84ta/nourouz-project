@@ -8,4 +8,10 @@ public class Human extends Entity {
     public Human(String name) {
         this.name = name;
     }
+
+
+    @Override
+    public Human clone() {
+        return (Human) super.clone();
+    }
 }

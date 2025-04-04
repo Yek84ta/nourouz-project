@@ -8,32 +8,43 @@ public class Database {
 
     private static ArrayList<Entity> entities = new ArrayList<>();
 
+    public static int idCreation;
+
+
     private Database() {
     }
 
     public static void add(Entity e) {
         entities.add(e);
-        e.id = entities.size();
+        idCreation ++;
+        e.id = idCreation;
+
     }
 
     public static Entity get(int id) {
         for (Entity entity : entities)
             if (entity.id == id)
-                return entity;
+
+                return entity.clone();
+
         throw new EntityNotFoundException(id);
     }
 
     public static void delete(int id) {
         for (Entity entity : entities)
-            if (entity.id == id)
+            if (entity.id == id) {
                 entities.remove(entity);
+                return;
+            }
+
         throw new EntityNotFoundException(id);
     }
 
     public static void update(Entity e) {
         for (Entity entity : entities)
             if (entity.id == e.id) {
-                entities.set(entities.indexOf(entity), e);
+                entities.set(entities.indexOf(entity), e.clone());
+
                 return;
             }
         throw new EntityNotFoundException();
