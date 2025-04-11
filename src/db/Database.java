@@ -2,6 +2,9 @@ package db;
 
 import db.exception.EntityNotFoundException;
 import db.exception.InvalidEntityException;
+import todo.entity.Step;
+import todo.entity.Task;
+import todo.service.StepService;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,9 +12,12 @@ import java.util.HashMap;
 
 public class Database {
 
-    private static ArrayList<Entity> entities = new ArrayList<>();
+
+    public static ArrayList<Entity> entities = new ArrayList<>();
     public static int idCreation;
     private static HashMap<Integer, Validator> validators = new HashMap<>();
+
+
 
     private Database() {
     }
@@ -24,8 +30,10 @@ public class Database {
     }
 
     public static void add(Entity e) throws InvalidEntityException {
-      /*  Validator validator = validators.get(e.getEntityCode());
-        validator.validate(e);*/
+
+        Validator validator = validators.get(e.getEntityCode());
+        validator.validate(e);
+
 
         if (e instanceof Trackable) {
             Trackable trackableEntity = (Trackable) e;
@@ -39,12 +47,6 @@ public class Database {
         e.id = idCreation;
     }
 
-    public static Entity get(int id) {
-        for (Entity entity : entities)
-            if (entity.id == id)
-                return entity.clone();
-        throw new EntityNotFoundException(id);
-    }
 
     public static void delete(int id) {
         for (Entity entity : entities)
@@ -56,8 +58,10 @@ public class Database {
     }
 
     public static void update(Entity e) throws InvalidEntityException {
-      /*  Validator validator = validators.get(e.getEntityCode());
-        validator.validate(e);*/
+
+       Validator validator = validators.get(e.getEntityCode());
+        validator.validate(e);
+
 
         if (e instanceof Trackable) {
             Trackable trackableEntity = (Trackable) e;
@@ -72,4 +76,33 @@ public class Database {
             }
         throw new EntityNotFoundException();
     }
+
+
+    public static Entity findByID (int id){
+        for (Entity entity : entities)
+            if (entity.id == id)
+                return entity;
+        throw new EntityNotFoundException(id);
+    }
+
+
+    public static Entity get(int id) {
+        for (Entity entity : entities)
+            if (entity.id == id)
+                return entity.clone();
+        throw new EntityNotFoundException(id);
+    }
+
+    public static ArrayList<Entity> getAll(int entityCode) {
+        ArrayList<Entity> result = new ArrayList<>();
+
+        for (Entity entity : entities) {
+            if (entity.getEntityCode() == entityCode) {
+                result.add(entity.clone());
+            }
+        }
+
+        return result;
+    }
+
 }
