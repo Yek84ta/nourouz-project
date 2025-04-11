@@ -1,11 +1,7 @@
 import db.Database;
-import db.Entity;
-import db.Serializer;
 import db.exception.InvalidEntityException;
 import todo.entity.Step;
 import todo.entity.Task;
-import todo.serializer.StepSerializer;
-import todo.serializer.TaskSerializer;
 import todo.service.StepService;
 import todo.service.TaskService;
 import todo.validator.StepValidator;
@@ -16,13 +12,8 @@ public class Main {
     public static void main(String[] args) throws InvalidEntityException {
         Scanner scanner = new Scanner(System.in);
 
-
-        Database.registerValidator(Task.TASK_ENTITY_CODE, new TaskValidator());
-        Database.registerValidator(Step.STEP_ENTITY_CODE, new StepValidator());
-        Database.registerSerializer(Task.TASK_ENTITY_CODE, new TaskSerializer());
-        Database.registerSerializer(Step.STEP_ENTITY_CODE, new StepSerializer());
-
-        Database.load();
+        Database.registerValidator(Task.TASK_ENTITY_CODE , new TaskValidator());
+        Database.registerValidator(Step.STEP_ENTITY_CODE ,new StepValidator());
 
         System.out.println("Welcome to the To-Do List program!");
         System.out.println("Here, you can manage your daily tasks and never forget anything.");
@@ -147,7 +138,6 @@ public class Main {
                     break;
 
                 case 5:
-                    Database.save();
                     System.out.println("Exiting the program...");
                     System.exit(0);
                     break;
